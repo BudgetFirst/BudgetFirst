@@ -11,6 +11,7 @@ Most discussions happen on Slack: [![Slack Status](https://budgetfirst.herokuapp
 ## Development status
 
 **v.02 - planned**
+
 The next version will get basic functionality which will include the initialization of a budget, managing accounts and transactions.
 Until now there no date for a release planned.
 You can view the roadmap [here.](https://github.com/BudgetFirst/BudgetFirst/wiki/Roadmap)
