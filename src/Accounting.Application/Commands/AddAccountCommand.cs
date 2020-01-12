@@ -1,5 +1,5 @@
 ﻿// BudgetFirst 
-// ©2016 Thomas Mühlgrabner
+// ©2020 Sabrina Mühlgrabner
 // This source code is dual-licensed under:
 //   * Mozilla Public License 2.0 (MPL 2.0) 
 //   * GNU General Public License v3.0 (GPLv3)
