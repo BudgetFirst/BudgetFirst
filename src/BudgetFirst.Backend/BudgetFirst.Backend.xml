@@ -1,0 +1,529 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BudgetFirst.Backend</name>
+    </assembly>
+    <members>
+        <member name="F:BudgetFirst.Backend.Account.AccountListItem.name">
+            <summary>
+            Account name
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.Account.AccountListItem.id">
+            <summary>
+            Account Id
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.Account.AccountListItem.#ctor(System.Guid,System.String,BudgetFirst.Backend.EventStore.EventStore)">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.Account.AccountListItem"/> class.
+            </summary>
+            <param name="id">Account id</param>
+            <param name="name">Account name</param>
+            <param name="eventStore">Event store</param>
+        </member>
+        <member name="P:BudgetFirst.Backend.Account.AccountListItem.Id">
+            <summary>
+            Gets the account Id
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.Account.AccountListItem.Name">
+            <summary>
+            Gets or sets the account name
+            </summary>
+        </member>
+        <member name="T:BudgetFirst.Backend.Core">
+            <summary>
+            BudgetFirst application core
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.Core.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BudgetFirst.Backend.Core"/> class.
+            </summary>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.DeviceId">
+            <summary>
+            Contains the current device Id
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.DeviceId.deviceId">
+            <summary>
+            Current device Id
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceId.SetDeviceId(System.Guid)">
+            <summary>
+            Set the current device Id
+            </summary>
+            <param name="id">Current device Id</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceId.GetDeviceId">
+            <summary>
+            Get the current device Id
+            </summary>
+            <returns>The current device Id</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceId.ToString">
+            <summary>
+            To string
+            </summary>
+            <returns>String value of device id. Always formatted the same</returns>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.DeviceVectorClock">
+            <summary>
+            A vector clock tied to a device
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.DeviceVectorClock.vectorClock">
+            <summary>
+            Current vector clock
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.DeviceVectorClock.deviceId">
+            <summary>
+            Current device Id
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceVectorClock.#ctor(BudgetFirst.Backend.EventStore.DeviceId)">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.DeviceVectorClock"/> class.
+            </summary>
+            <param name="deviceId">Device id</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceVectorClock.#ctor(BudgetFirst.Backend.EventStore.DeviceId,BudgetFirst.Backend.EventStore.VectorClock)">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.DeviceVectorClock"/> class.
+            </summary>
+            <param name="deviceId">Device id</param>
+            <param name="vectorClock">Current vector clock</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceVectorClock.SetState(BudgetFirst.Backend.EventStore.VectorClock)">
+            <summary>
+            Set the current state
+            </summary>
+            <param name="vectorClock">Vector clock</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceVectorClock.Increment">
+            <summary>
+            Increment the current vector clock
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceVectorClock.Clone">
+            <summary>
+            Create a copy of this vector clock
+            </summary>
+            <returns>A clone of this vector clock</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceVectorClock.GetVectorClock">
+            <summary>
+            Get the current vector clock
+            </summary>
+            <returns>Underlying vector clock</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.DeviceVectorClock.Update(BudgetFirst.Backend.EventStore.VectorClock)">
+            <summary>
+            Update the vector clock to a new value
+            </summary>
+            <param name="value">New value to set</param>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.Event">
+            <summary>
+            A base class for events to aid in implementation of actual events
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.Event.#ctor">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.Event"/> class.
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.Event.DeviceId">
+            <summary>
+            Gets or sets the Id of the device that the event happened on
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.Event.EventId">
+            <summary>
+            Gets or sets the Id of the event
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.Event.Timestamp">
+            <summary>
+            Gets or sets the UTC timestamp of when the event occurred
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.Event.VectorClock">
+            <summary>
+            Gets or sets the VectorClock for the event
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.Event.CompareTo(System.Object)">
+            <summary>
+            Compares this Event with a second event and determines the order 
+            they happened, based on the VectorClock.
+            </summary>
+            <param name="obj">The event to compare</param>
+            <returns>1 if this event happened after, -1 if this event happened before, 0 if the order can not be determined</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.Event.Equals(System.Object)">
+            <summary>
+            Test for equality
+            </summary>
+            <param name="obj">Other event</param>
+            <returns><c>true</c> if the other event is the same as this event</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.Event.GetHashCode">
+            <summary>
+            Get the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.Event.IsValid">
+            <summary>
+            Is this event valid or are there missing fields?
+            </summary>
+            <returns><c>true</c> if all required fields are set</returns>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.EventStore">
+            <summary>
+            A simple event store
+            </summary>
+            <remarks>Not thread-safe, does not yet include any persistence (which should be handled outside this class anyway)</remarks>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.EventStore.state">
+            <summary>
+            All saved events
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.EventStore.State">
+            <summary>
+            Gets or sets state (i.e. all events)
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.GetEvents">
+            <summary>
+            Get all saved events.
+            Beware: events are referenced directly, do not manipulate them.
+            </summary>
+            <returns>References to all saved events</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.Add(System.Collections.Generic.IEnumerable{BudgetFirst.Backend.EventStore.Event})">
+            <summary>
+            Save multiple events
+            </summary>
+            <param name="domainEvents">Events to save</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.Add(BudgetFirst.Backend.EventStore.Event)">
+            <summary>
+            Save a single event
+            </summary>
+            <param name="domainEvent">Event to save</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.CheckValidity(BudgetFirst.Backend.EventStore.Event)">
+            <summary>
+            Check the validity of an event (i.e. all required fields are set). 
+            </summary>
+            <param name="event">Event to check</param>
+            <exception cref="T:BudgetFirst.Backend.EventStore.IncompleteEventException">The domain event is incomplete/invalid and cannot be added to the event store.</exception>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.NotifySubscribers(System.Collections.Generic.IEnumerable{BudgetFirst.Backend.EventStore.Event})">
+            <summary>
+            Notify subscribers of new events
+            </summary>
+            <param name="newEvents">New events in ascending order</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.NotifySubscribers(BudgetFirst.Backend.EventStore.Event)">
+            <summary>
+            Notify subscribers of new event
+            </summary>
+            <param name="newEvent">new event</param>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.EventStoreState">
+            <summary>
+            State for the <see cref="T:BudgetFirst.Backend.EventStore.EventStore"/>
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.EventStoreState.events">
+            <summary>
+            Contains the list of events in this store
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.EventStoreState.Events">
+            <summary>
+            Gets or sets the events in this store.
+            Is guaranteed to be not <c>null</c>.
+            </summary>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.IEvent">
+            <summary>
+            Base interface for events
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.IEvent.DeviceId">
+            <summary>
+            Gets the Id of the device that the event happened on
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.IEvent.EventId">
+            <summary>
+            Gets the Id of the event
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.IEvent.Timestamp">
+            <summary>
+            Gets the UTC timestamp of when the event occurred
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.IEvent.VectorClock">
+            <summary>
+            Gets the VectorClock for the event
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.IEvent.IsValid">
+            <summary>
+            Is this event valid or are there missing fields?
+            </summary>
+            <returns><c>true</c> if all required fields are set</returns>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.IEventStore">
+            <summary>
+            Represents an event store
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.IEventStore.Add(BudgetFirst.Backend.EventStore.Event)">
+            <summary>
+            Add a single event
+            </summary>
+            <param name="domainEvent">Event to add</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.IEventStore.Add(System.Collections.Generic.IEnumerable{BudgetFirst.Backend.EventStore.Event})">
+            <summary>
+            Add multiple events
+            </summary>
+            <param name="domainEvents">Events to add</param>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.IncompleteEventException">
+            <summary>
+            A domain event is no valid to be persisted because some fields are missing.
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.IncompleteEventException.#ctor">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.IncompleteEventException"/> class.
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.IncompleteEventException.#ctor(System.String)">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.IncompleteEventException"/> class.
+            </summary>
+            <param name="message">Exception message text</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.IncompleteEventException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.IncompleteEventException"/> class.
+            </summary>
+            <param name="message">Exception message text</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.VectorClock">
+            <summary>
+            A Vector Clock that can tell the relative order of events on distributed systems.
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.#ctor">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.VectorClock"/> class.
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.#ctor(System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.VectorClock"/> class.
+            For internal use only (and tests)
+            </summary>
+            <param name="vector">Initial vector</param>
+            <remarks>Make internal and replace with factory for testing?</remarks>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.#ctor(BudgetFirst.Backend.EventStore.VectorClock)">
+            <summary>
+            Initialises a new instance of the <see cref="T:BudgetFirst.Backend.EventStore.VectorClock"/> class.
+            Copies an existing vector clock
+            </summary>
+            <param name="original">Source vector clock to copy/clone</param>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.VectorClock.ComparisonResult">
+            <summary>
+            Comparison result for vector clocks
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.VectorClock.ComparisonResult.Equal">
+            <summary>
+            Both vector clocks are equal
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.VectorClock.ComparisonResult.Greater">
+            <summary>
+            The vector clock is greater (later)
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.VectorClock.ComparisonResult.Smaller">
+            <summary>
+            The vector clock is smaller (earlier)
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.VectorClock.ComparisonResult.Simultaneous">
+            <summary>
+            Both vector clocks are simultaneous
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.VectorClock.Timestamp">
+            <summary>
+            Gets the timestamp of the last increment
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.VectorClock.Keys">
+            <summary>
+            Gets an IEnumerable of Keys/Devices in the Vector Clock.
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.VectorClock.Values">
+            <summary>
+            Gets an IEnumerable of integer values in the Vector Clock.
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.VectorClock.Count">
+            <summary>
+            The number of devices in the Vector Clock.
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.VectorClock.Vector">
+            <summary>
+            Gets or sets the Vector.
+            </summary>
+        </member>
+        <member name="P:BudgetFirst.Backend.EventStore.VectorClock.Item(System.String)">
+            <summary>
+            Gets the value for a particular device.
+            </summary>
+            <param name="key">The device</param>
+            <returns>The value for the device</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.Increment(System.String)">
+            <summary>
+            Create a copy of the current VectorClock and Increment the Vector for the given Device ID by 1 on the new VectorClock
+            </summary>
+            <param name="deviceId">The readOnlyDeviceId to increment.</param>
+            <returns>The new incremented VectorClock</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.Merge(BudgetFirst.Backend.EventStore.VectorClock)">
+            <summary>
+            Merges the VectorClock with a second VectorClock by returning a new VectorClock
+            that has maximum vector value for each device.
+            </summary>
+            <param name="clock2">The VectorClock to be merged into the current VectorClock.</param>
+            <returns>A new VectorClock with the maximum value for each device.</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.CompareVectors(BudgetFirst.Backend.EventStore.VectorClock)">
+            <summary>
+            A function to compare the current VectorClock to another and 
+            determine which came first, or if the events happened simultaneously.
+            </summary>
+            <param name="clock2">The VectorClock to compare.</param>
+            <returns>A ComparisonResult enum with the result of the comparison.</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.CompareTo(System.Object)">
+            <summary>
+            The default comparer for VectorClock.  Determines the order of events 
+            based on the vector and the timestamp.
+            </summary>
+            <param name="obj">The VectorClock to compare to.</param>
+            <returns>1 if this VectorClock happened after, 
+            -1 if this VectorClock happened before,
+            0 if the order can not be determined(Simultaneous or Equal Vectors and the same timestamp)</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.Equals(System.Object)">
+            <summary>Determines whether the specified object is equal to the current object.</summary>
+            <returns>true if the specified object  is equal to the current object; otherwise, false.</returns>
+            <param name="obj">The object to compare with the current object. </param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.GetHashCode">
+            <summary>Serves as the default hash function. </summary>
+            <returns>A hash code for the current object.</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.Copy">
+            <summary>
+            Create an exact copy of this current VectorClock.
+            </summary>
+            <returns>A copy of the current VectorClock</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.ContainsKey(System.String)">
+            <summary>
+            Returns a boolean value of whether the VectorClock contains a device.
+            </summary>
+            <param name="key">The device</param>
+            <returns>True if the device is present in the VectorClock, otherwise false</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.TryGetValue(System.String,System.Int32@)">
+            <summary>
+            Tries to get the value for a device, and returns a boolean if the get is successful or not.
+            </summary>
+            <param name="key">The device</param>
+            <param name="value">The value for the device</param>
+            <returns>Whether the get is successful or not</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.GetEnumerator">
+            <summary>
+            Gets an Enumerator of KeyValuePairs representing the VectorClock.
+            </summary>
+            <returns>The Enumerator</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Gets the Enumerator for the VectorClock's Vector.
+            </summary>
+            <returns>The Enumerator</returns>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.CloneVector(System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Creates a dictionary copy/clone of the vector.
+            </summary>
+            <param name="vector">Vector to clone</param>
+            <returns>Copy/clone of the vector</returns>
+        </member>
+        <member name="T:BudgetFirst.Backend.EventStore.VectorClock.VectorComparison">
+            <summary>
+            Handles computation of vector comparison result
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.VectorClock.VectorComparison.equal">
+            <summary>
+            Indicates that the vectors are equal
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.VectorClock.VectorComparison.greater">
+            <summary>
+            If the vectors are not equal, indicates that the current vector is greater.
+            </summary>
+        </member>
+        <member name="F:BudgetFirst.Backend.EventStore.VectorClock.VectorComparison.smaller">
+            <summary>
+            If the vectors are not equal, indicates that the current vector is smaller.
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.VectorComparison.SetSmallerOrSimultaneous">
+            <summary>
+            The vector is either smaller or simultaneous
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.VectorComparison.SetGreaterOrSimultaneous">
+            <summary>
+            The vector is either greater or simultaneous
+            </summary>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.VectorClock.VectorComparison.GetComparisonResult">
+            <summary>
+            Get the comparison result
+            </summary>
+            <returns>Comparison result</returns>
+        </member>
+    </members>
+</doc>

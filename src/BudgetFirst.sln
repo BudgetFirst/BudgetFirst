@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.Domain.Models", "Accounting.Domain.Models\Accounting.Domain.Models.csproj", "{C5A29F5E-5669-41BB-AA7B-6943ED5CFBCE}"
 EndProject
@@ -62,6 +62,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgeting.Domain.Events", "Budgeting.Domain.Events\Budgeting.Domain.Events.csproj", "{06242251-ED86-4038-8606-925A4FB5D830}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Domain.Model", "Common.Domain.Model\Common.Domain.Model.csproj", "{8A2D1F46-8FCD-4E72-A8EE-98A1308065DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetFirst.Backend", "BudgetFirst.Backend\BudgetFirst.Backend.csproj", "{171FB3BB-EAF2-40FA-AF44-63C7E8CE88E1}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -177,6 +179,12 @@ Global
 		{8A2D1F46-8FCD-4E72-A8EE-98A1308065DB}.Linux|Any CPU.Build.0 = Release|Any CPU
 		{8A2D1F46-8FCD-4E72-A8EE-98A1308065DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A2D1F46-8FCD-4E72-A8EE-98A1308065DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{171FB3BB-EAF2-40FA-AF44-63C7E8CE88E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{171FB3BB-EAF2-40FA-AF44-63C7E8CE88E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{171FB3BB-EAF2-40FA-AF44-63C7E8CE88E1}.Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{171FB3BB-EAF2-40FA-AF44-63C7E8CE88E1}.Linux|Any CPU.Build.0 = Debug|Any CPU
+		{171FB3BB-EAF2-40FA-AF44-63C7E8CE88E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{171FB3BB-EAF2-40FA-AF44-63C7E8CE88E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,5 +207,8 @@ Global
 		{8A139D4B-FA1C-48DD-B415-43089ED6720C} = {80301C9E-D28A-4EDE-9A07-EA1DB33E94D8}
 		{06242251-ED86-4038-8606-925A4FB5D830} = {80301C9E-D28A-4EDE-9A07-EA1DB33E94D8}
 		{8A2D1F46-8FCD-4E72-A8EE-98A1308065DB} = {B5BE9A28-1EE5-43F5-A730-DC70A0F0C879}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1E0F649-3F42-472C-9C28-B2A2A37E4922}
 	EndGlobalSection
 EndGlobal
