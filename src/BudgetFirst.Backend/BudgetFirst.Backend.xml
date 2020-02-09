@@ -52,18 +52,6 @@
             Current device Id
             </summary>
         </member>
-        <member name="M:BudgetFirst.Backend.EventStore.DeviceId.SetDeviceId(System.Guid)">
-            <summary>
-            Set the current device Id
-            </summary>
-            <param name="id">Current device Id</param>
-        </member>
-        <member name="M:BudgetFirst.Backend.EventStore.DeviceId.GetDeviceId">
-            <summary>
-            Get the current device Id
-            </summary>
-            <returns>The current device Id</returns>
-        </member>
         <member name="M:BudgetFirst.Backend.EventStore.DeviceId.ToString">
             <summary>
             To string
@@ -207,17 +195,11 @@
             </summary>
             <returns>References to all saved events</returns>
         </member>
-        <member name="M:BudgetFirst.Backend.EventStore.EventStore.Add(System.Collections.Generic.IEnumerable{BudgetFirst.Backend.EventStore.Event})">
-            <summary>
-            Save multiple events
-            </summary>
-            <param name="domainEvents">Events to save</param>
-        </member>
-        <member name="M:BudgetFirst.Backend.EventStore.EventStore.Add(BudgetFirst.Backend.EventStore.Event)">
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.Add``1(``0)">
             <summary>
             Save a single event
             </summary>
-            <param name="domainEvent">Event to save</param>
+            <param name="newEvent">Event to save</param>
         </member>
         <member name="M:BudgetFirst.Backend.EventStore.EventStore.CheckValidity(BudgetFirst.Backend.EventStore.Event)">
             <summary>
@@ -226,17 +208,17 @@
             <param name="event">Event to check</param>
             <exception cref="T:BudgetFirst.Backend.EventStore.IncompleteEventException">The domain event is incomplete/invalid and cannot be added to the event store.</exception>
         </member>
-        <member name="M:BudgetFirst.Backend.EventStore.EventStore.NotifySubscribers(System.Collections.Generic.IEnumerable{BudgetFirst.Backend.EventStore.Event})">
-            <summary>
-            Notify subscribers of new events
-            </summary>
-            <param name="newEvents">New events in ascending order</param>
-        </member>
-        <member name="M:BudgetFirst.Backend.EventStore.EventStore.NotifySubscribers(BudgetFirst.Backend.EventStore.Event)">
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.NotifySubscribers``1(``0)">
             <summary>
             Notify subscribers of new event
             </summary>
             <param name="newEvent">new event</param>
+        </member>
+        <member name="M:BudgetFirst.Backend.EventStore.EventStore.ApplyVectorClock(BudgetFirst.Backend.EventStore.Event)">
+            <summary>
+            Apply the current vector clock to the event (and increment it)
+            </summary>
+            <param name="newEvent">Event to raise and handle</param>
         </member>
         <member name="T:BudgetFirst.Backend.EventStore.EventStoreState">
             <summary>

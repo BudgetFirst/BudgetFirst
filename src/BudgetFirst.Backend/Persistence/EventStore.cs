@@ -27,20 +27,47 @@ namespace BudgetFirst.Backend.EventStore
     using System.Collections.Generic;
     using System.Linq;
 
-        /// <summary>
+    /// <summary>
     /// A simple event store
     /// </summary>
     /// <remarks>Not thread-safe, does not yet include any persistence (which should be handled outside this class anyway)</remarks>
-    public class EventStore : IEventStore
+    public class EventStore
     {
         /// <summary>
         /// All saved events
         /// </summary>
         private EventStoreState state; // = new EventStoreState();
-       
+        private DeviceId deviceId;
+        private DeviceVectorClock deviceVectorClock;
+
+        private Dictionary<Type, List<Action<Event>>> subscribers;
+
         public EventStore(EventStoreState state)
         {
+            if (state is null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
             this.state = state;
+            this.subscribers = new Dictionary<Type, List<Action<Event>>>();
+            this.deviceId = new DeviceId() { Id = Guid.NewGuid() };
+            this.deviceVectorClock = new DeviceVectorClock(this.deviceId);
+        }
+
+        public EventStore(EventStoreState state, DeviceId deviceId)
+        {
+            if (state is null)
+            {
+                throw new ArgumentNullException(nameof(state));
+            }
+            if (deviceId is null)
+            {
+                throw new ArgumentNullException(nameof(deviceId));
+            }
+            this.state = state;
+            this.subscribers = new Dictionary<Type, List<Action<Event>>>();
+            this.deviceId = new DeviceId() { Id = deviceId.Id };
+            this.deviceVectorClock = new DeviceVectorClock(this.deviceId);
         }
 
         /// <summary>
@@ -69,44 +96,52 @@ namespace BudgetFirst.Backend.EventStore
             return this.state.Events;
         }
 
-        /// <summary>
-        /// Save multiple events
-        /// </summary>
-        /// <param name="domainEvents">Events to save</param>
-        public void Add(IEnumerable<Event> domainEvents)
-        {
-            var newEvents = domainEvents.ToList();
-            foreach (var @event in newEvents)
-            {
-                this.CheckValidity(@event);    
-            }
+        ///// <summary>
+        ///// Save multiple events
+        ///// </summary>
+        ///// <param name="newEvents">Events to save</param>
+        //public void Add<TEvent>(IEnumerable<Event> newEvents)
+        //{
+        //    var newEventList = newEvents.ToList();
+        //    foreach (var @event in newEventList)
+        //    {
+        //        this.CheckValidity(@event);
+        //        this.ApplyVectorClock(@event);
+        //    }
 
-            this.state.Events.AddRange(newEvents);
-            this.NotifySubscribers(newEvents);
-        }
-        
+        //    this.state.Events.AddRange(newEventList);
+        //    this.NotifySubscribers(newEventList);
+        //}
+
         /// <summary>
         /// Save a single event
         /// </summary>
-        /// <param name="domainEvent">Event to save</param>
-        public void Add(Event domainEvent)
+        /// <param name="newEvent">Event to save</param>
+        public void Add<TEvent>(TEvent newEvent) where TEvent : Event
         {
-            if(domainEvent is null)
+            if (newEvent is null)
             {
-                throw new ArgumentNullException(nameof(domainEvent));
+                throw new ArgumentNullException(nameof(newEvent));
             }
-            this.CheckValidity(domainEvent);
-            this.state.Events.Add(domainEvent);
-            this.NotifySubscribers(domainEvent);
+            this.CheckValidity(newEvent);
+            this.ApplyVectorClock(newEvent);
+            this.state.Events.Add(newEvent);
+            this.NotifySubscribers(newEvent);
         }
 
-        // TODO: bad delegate, makes it impossible to remove later
+        // TODO: bad delegate, makes it impossible to remove later. is this a problem? also not so nice
         public void SubscribeTo<TEvent>(Action<TEvent> action) where TEvent : Event
         {
-            // TODO: implement. 
-            throw new NotImplementedException();
+            var eventType = typeof(TEvent);
+            if (!this.subscribers.TryGetValue(eventType, out var actions))
+            {
+                actions = new List<Action<Event>>();
+                this.subscribers.Add(eventType, actions);
+            }
+            Action<Event> eventAction = (x) => action.Invoke(x as TEvent); // TODO: HACK and unknown if this works
+            actions.Add(eventAction);            
         }
-        
+
         /// <summary>
         /// Check the validity of an event (i.e. all required fields are set). 
         /// </summary>
@@ -118,28 +153,44 @@ namespace BudgetFirst.Backend.EventStore
             {
                 throw new IncompleteEventException();
             }
-        }        
-
-        /// <summary>
-        /// Notify subscribers of new events
-        /// </summary>
-        /// <param name="newEvents">New events in ascending order</param>
-        private void NotifySubscribers(IEnumerable<Event> newEvents)
-        {
-            foreach(var newEvent in newEvents)
-            {
-                this.NotifySubscribers(newEvent);
-            }
         }
+
+        ///// <summary>
+        ///// Notify subscribers of new events
+        ///// </summary>
+        ///// <param name="newEvents">New events in ascending order</param>
+        //private void NotifySubscribers(IEnumerable<Event> newEvents)
+        //{
+        //    foreach(var newEvent in newEvents)
+        //    {
+        //        this.NotifySubscribers(newEvent);
+        //    }
+        //}
 
         /// <summary>
         /// Notify subscribers of new event
         /// </summary>
         /// <param name="newEvent">new event</param>
-        private void NotifySubscribers(Event newEvent)
+        private void NotifySubscribers<TEvent>(TEvent newEvent) where TEvent : Event
         {
-            // TODO: implement. 
-            throw new NotImplementedException();
+            var eventType = typeof(TEvent);
+            if (this.subscribers.TryGetValue(eventType, out var subscriptions))
+            {
+                foreach (var subscriber in subscriptions)
+                {
+                    subscriber.Invoke(newEvent);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Apply the current vector clock to the event (and increment it)
+        /// </summary>
+        /// <param name="newEvent">Event to raise and handle</param>
+        private void ApplyVectorClock(Event newEvent)
+        {
+            this.deviceVectorClock.Increment();
+            newEvent.VectorClock = this.deviceVectorClock.GetVectorClock();
         }
     }
 }

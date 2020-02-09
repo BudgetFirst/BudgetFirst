@@ -79,7 +79,7 @@ namespace BudgetFirst.Backend.EventStore
         /// </summary>
         public void Increment()
         {
-            var newValue = this.vectorClock.Increment(this.deviceId.ToString()); // use device id specific tostring
+            var newValue = this.vectorClock.Increment(this.deviceId.ToString()); // use device id specific tostring. 
             this.vectorClock = newValue;
         }
 

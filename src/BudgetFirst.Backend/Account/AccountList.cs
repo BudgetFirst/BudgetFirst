@@ -41,14 +41,15 @@ namespace BudgetFirst.Backend.Account
                 throw new ArgumentNullException(nameof(eventStore));
             }
             this.eventStore = eventStore;
-            this.eventStore.SubscribeTo<AccountCreated>(this.Handle);
+            this.eventStore.SubscribeTo<AccountCreated>(this.AccountCreated);
+            this.eventStore.SubscribeTo<AccountRenamed>(this.AccountRenamed);
         }
 
-        private void Handle(AccountCreated accountCreated) {
+        private void AccountCreated(AccountCreated accountCreated) {
             this.Add(new AccountListItem(accountCreated.Id, accountCreated.Name, eventStore));
         }
 
-        private void Handle(AccountRenamed accountRenamed)
+        private void AccountRenamed(AccountRenamed accountRenamed)
         {
             var account = this.Items.Single(x => x.Id == accountRenamed.Id);
             account.Name = accountRenamed.NewName;

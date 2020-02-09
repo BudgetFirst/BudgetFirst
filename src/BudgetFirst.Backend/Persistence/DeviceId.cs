@@ -35,22 +35,16 @@ namespace BudgetFirst.Backend.EventStore
         /// </summary>
         private Guid deviceId;
 
-        /// <summary>
-        /// Set the current device Id
-        /// </summary>
-        /// <param name="id">Current device Id</param>
-        public void SetDeviceId(Guid id)
+        public Guid Id
         {
-            this.deviceId = id;
-        }
-
-        /// <summary>
-        /// Get the current device Id
-        /// </summary>
-        /// <returns>The current device Id</returns>
-        public Guid GetDeviceId()
-        {
-            return this.deviceId;
+            get
+            {
+                return this.deviceId;
+            }
+            set
+            {
+                this.deviceId = value;
+            }
         }
 
         /// <summary>
